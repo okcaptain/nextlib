@@ -32,7 +32,11 @@ jobs:
         uses: gradle/gradle-build-action@v3
 
       - name: Build Project with gradle
-        run: ./gradlew assembleRelease
+        run: |
+        ./gradlew assembleRelease
+        ls -al ./
+        ls -al ./media3ext
+        ls -al ./media3ext/src
 
       - uses: actions/upload-artifact@v4.3.1
         with:
