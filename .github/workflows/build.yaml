@@ -36,9 +36,11 @@ jobs:
           ./gradlew assembleRelease
           ls -al ./
           ls -al ./media3ext
-          ls -al ./media3ext/src
+          ls -al ./media3ext/build
+          ls -al ./media3ext/build/outputs
+          ls -al ./media3ext/build/outputs/aar/
 
       - uses: actions/upload-artifact@v4.3.1
         with:
-          name: nextlib-release.aar
-          path: ./ffcodecs/build/outputs/aar/ffcodecs-release.aar
+          name: nextlib-release
+          path: ./media3ext/build/outputs/aar
