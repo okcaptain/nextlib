@@ -221,6 +221,8 @@ function buildFfmpeg() {
     DEP_CFLAGS="-I$BUILD_DIR/external/$ABI/include"
     DEP_LD_FLAGS="-L$BUILD_DIR/external/$ABI/lib"
 
+    cp "${AVS3_DIR}"/build/android/ndk/libs/"${ABI}"/*.so $BUILD_DIR/external/$ABI/lib
+
     # Configure FFmpeg build
     ./configure \
       --prefix=$BUILD_DIR/$ABI \
@@ -270,8 +272,6 @@ function buildFfmpeg() {
     OUTPUT_LIB=${OUTPUT_DIR}/lib/${ABI}
     mkdir -p "${OUTPUT_LIB}"
     cp "${BUILD_DIR}"/"${ABI}"/lib/*.so "${OUTPUT_LIB}"
-
-    cp "${AVS3_DIR}"/build/android/ndk/libs/"${ABI}"/*.so "${OUTPUT_LIB}"
 
     OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ABI}
     mkdir -p "${OUTPUT_HEADERS}"
