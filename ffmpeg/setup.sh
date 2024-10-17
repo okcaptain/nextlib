@@ -81,10 +81,26 @@ function downloadFfmpeg() {
 
 function buildLibuavs3d() {
   pushd $AVS3_DIR
-  chmod +x version.sh
-  ./version.sh
-  cd build/android/ndk/jni
-  $ANDROID_NDK_HOME/ndk-build
+
+  for ABI in $ANDROID_ABIS; do
+    CMAKE_BUILD_DIR=$AVS3_DIR/avs3_build_${ABI}
+    rm -rf ${CMAKE_BUILD_DIR}
+    mkdir -p ${CMAKE_BUILD_DIR}
+    cd ${CMAKE_BUILD_DIR}
+
+    ${CMAKE_EXECUTABLE} .. \
+     -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
+     -DANDROID_ABI=$ABI \
+     -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
+     -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/external/$ABI \
+     -DENABLE_TESTING=0
+     -DCOMPILE_10BIT=1
+     -DBUILD_SHARED_LIBS=1
+
+    make -j$JOBS
+    make install
+  done
+
   popd
 }
 
@@ -220,9 +236,6 @@ function buildFfmpeg() {
     # Referencing dependencies without pkgconfig
     DEP_CFLAGS="-I$BUILD_DIR/external/$ABI/include"
     DEP_LD_FLAGS="-L$BUILD_DIR/external/$ABI/lib"
-
-    cp "${AVS3_DIR}"/build/android/ndk/libs/"${ABI}"/*.so $BUILD_DIR/external/$ABI/lib
-    ls -al $BUILD_DIR/external/$ABI/lib
 
     # Configure FFmpeg build
     ./configure \
