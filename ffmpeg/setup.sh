@@ -89,6 +89,7 @@ function buildLibuavs3d() {
     cd ${CMAKE_BUILD_DIR}
 
     ${CMAKE_EXECUTABLE} .. \
+     -v \
      -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
      -DANDROID_ABI=$ABI \
      -DCMAKE_SYSTEM_PROCESSOR=$ABI \
