@@ -93,8 +93,8 @@ function buildLibuavs3d() {
      -DANDROID_ABI=$ABI \
      -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
      -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/external/$ABI \
-     -DENABLE_TESTING=0
-     -DCOMPILE_10BIT=1
+     -DENABLE_TESTING=0 \
+     -DCOMPILE_10BIT=1 \
      -DBUILD_SHARED_LIBS=1
 
     make -j$JOBS
