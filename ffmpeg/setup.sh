@@ -318,8 +318,8 @@ if [[ ! -d "$OUTPUT_DIR" && ! -d "$BUILD_DIR" ]]; then
   fi
 
   # Building library
+  buildLibuavs3d
   buildMbedTLS
   buildLibVpx
-  buildLibuavs3d
   buildFfmpeg
 fi
