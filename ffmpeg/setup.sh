@@ -42,7 +42,7 @@ mkdir -p $SOURCES_DIR
 
 function downloadLibuavs3d() {
   pushd $SOURCES_DIR
-  git clone https://github.com/uavs3/uavs3d
+  git clone https://github.com/okcaptain/uavs3d
   popd
 }
 
