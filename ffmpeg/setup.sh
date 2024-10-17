@@ -282,6 +282,11 @@ function buildFfmpeg() {
 }
 
 if [[ ! -d "$OUTPUT_DIR" && ! -d "$BUILD_DIR" ]]; then
+  # Download Libuavs3d source code if it doesn't exist
+  if [[ ! -d "$AVS3_DIR" ]]; then
+    downloadLibuavs3d
+  fi
+
   # Download MbedTLS source code if it doesn't exist
   if [[ ! -d "$MBEDTLS_DIR" ]]; then
     downloadMbedTLS
