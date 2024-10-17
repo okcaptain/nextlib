@@ -88,7 +88,7 @@ function buildLibuavs3d() {
     mkdir -p ${CMAKE_BUILD_DIR}
     cd ${CMAKE_BUILD_DIR}
 
-    ${CMAKE_EXECUTABLE} .. -v \
+    ${CMAKE_EXECUTABLE} .. \
      -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
      -DANDROID_ABI=$ABI \
      -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
@@ -268,6 +268,7 @@ function buildFfmpeg() {
       --enable-swresample \
       --enable-avformat \
       --enable-libvpx \
+      --enable-libuavs3d \
       --enable-protocol=file,http,https,mmsh,mmst,pipe,rtmp,rtmps,rtmpt,rtmpts,rtp,tls \
       --enable-version3 \
       --enable-mbedtls \
@@ -295,6 +296,10 @@ function buildFfmpeg() {
 }
 
 if [[ ! -d "$OUTPUT_DIR" && ! -d "$BUILD_DIR" ]]; then
+  # Download Libuavs3d source code if it doesn't exist
+  if [[ ! -d "$AVS3_DIR" ]]; then
+    downloadLibuavs3d
+  fi
 
   # Download MbedTLS source code if it doesn't exist
   if [[ ! -d "$MBEDTLS_DIR" ]]; then
@@ -312,6 +317,7 @@ if [[ ! -d "$OUTPUT_DIR" && ! -d "$BUILD_DIR" ]]; then
   fi
 
   # Building library
+  buildLibuavs3d
   buildMbedTLS
   buildLibVpx
   buildFfmpeg
