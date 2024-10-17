@@ -10,6 +10,7 @@ BASE_DIR=$(cd "$(dirname "$0")" && pwd)
 BUILD_DIR=$BASE_DIR/build
 OUTPUT_DIR=$BASE_DIR/output
 SOURCES_DIR=$BASE_DIR/sources
+AVS3_DIR=$SOURCES_DIR/uavs3d
 FFMPEG_DIR=$SOURCES_DIR/ffmpeg-$FFMPEG_VERSION
 VPX_DIR=$SOURCES_DIR/libvpx-$VPX_VERSION
 MBEDTLS_DIR=$SOURCES_DIR/mbedtls-$MBEDTLS_VERSION
@@ -38,6 +39,12 @@ TOOLCHAIN_PREFIX="${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_PLATFORM}"
 CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.22.1/bin/cmake
 
 mkdir -p $SOURCES_DIR
+
+function downloadLibuavs3d() {
+  pushd $SOURCES_DIR
+  git clone https://github.com/uavs3/uavs3d
+  popd
+}
 
 function downloadLibVpx() {
   pushd $SOURCES_DIR
@@ -69,6 +76,15 @@ function downloadFfmpeg() {
   [ -e $FFMPEG_FILE ] || { echo "$FFMPEG_FILE does not exist. Exiting..."; exit 1; }
   tar -zxf $FFMPEG_FILE
   rm $FFMPEG_FILE
+  popd
+}
+
+function buildLibuavs3d() {
+  pushd $AVS3_DIR
+  chmod +x version.sh
+  ./version.sh
+  cd build/android/ndk/jni
+  $ANDROID_NDK_HOME/ndk-build
   popd
 }
 
@@ -236,6 +252,7 @@ function buildFfmpeg() {
       --enable-swresample \
       --enable-avformat \
       --enable-libvpx \
+      --enable-libuavs3d \
       --enable-protocol=file,http,https,mmsh,mmst,pipe,rtmp,rtmps,rtmpt,rtmpts,rtp,tls \
       --enable-version3 \
       --enable-mbedtls \
@@ -253,6 +270,8 @@ function buildFfmpeg() {
     OUTPUT_LIB=${OUTPUT_DIR}/lib/${ABI}
     mkdir -p "${OUTPUT_LIB}"
     cp "${BUILD_DIR}"/"${ABI}"/lib/*.so "${OUTPUT_LIB}"
+
+    cp "${AVS3_DIR}"/build/android/ndk/libs/"${ABI}"/*.so "${OUTPUT_LIB}"
 
     OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ABI}
     mkdir -p "${OUTPUT_HEADERS}"
@@ -281,5 +300,6 @@ if [[ ! -d "$OUTPUT_DIR" && ! -d "$BUILD_DIR" ]]; then
   # Building library
   buildMbedTLS
   buildLibVpx
+  buildLibuavs3d
   buildFfmpeg
 fi
