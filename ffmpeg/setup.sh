@@ -95,7 +95,8 @@ function buildLibuavs3d() {
      -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/external/$ABI \
      -DENABLE_TESTING=0 \
      -DCOMPILE_10BIT=1 \
-     -DBUILD_SHARED_LIBS=1
+     -DBUILD_SHARED_LIBS=1 \
+     -DCMAKE_USE_PTHREADS_INIT=1
 
     make
     make install
