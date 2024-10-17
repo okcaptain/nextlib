@@ -97,7 +97,7 @@ function buildLibuavs3d() {
      -DCOMPILE_10BIT=1 \
      -DBUILD_SHARED_LIBS=1
 
-    make -j$JOBS
+    make
     make install
   done
 
