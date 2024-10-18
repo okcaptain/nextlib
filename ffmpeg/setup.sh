@@ -36,7 +36,7 @@ esac
 
 # Build tools
 TOOLCHAIN_PREFIX="${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_PLATFORM}"
-CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.22.1/bin/cmake
+CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.18.1/bin/cmake
 
 mkdir -p $SOURCES_DIR
 
@@ -91,13 +91,17 @@ function buildLibuavs3d() {
 
     ${CMAKE_EXECUTABLE} .. \
      -DCMAKE_VERBOSE_MAKEFILE=ON \
+     -DCMAKE_SYSTEM_NAME=Android \
+     -DCMAKE_SYSTEM_VERSION=${ANDROID_PLATFORM} \
+     -DCMAKE_ANDROID_ARCH_ABI=$ABI \
      -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
      -DPROJECT_ABI=$ABI \
+     -DANDROID_NDK=$ANDROID_NDK_HOME \
+     -DCMAKE_ANDROID_NDK=$ANDROID_NDK_HOME \
      -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
      -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/external/$ABI \
      -DCOMPILE_10BIT=1 \
-     -DBUILD_SHARED_LIBS=1 \
-     -DCMAKE_USE_PTHREADS_INIT=0
+     -DBUILD_SHARED_LIBS=1
 
     make
     make install
@@ -299,6 +303,11 @@ function buildFfmpeg() {
 
 if [[ ! -d "$OUTPUT_DIR" && ! -d "$BUILD_DIR" ]]; then
 
+  # Download Libuavs3d source code if it doesn't exist
+  if [[ ! -d "$AVS3_DIR" ]]; then
+    downloadLibuavs3d
+  fi
+
   # Download MbedTLS source code if it doesn't exist
   if [[ ! -d "$MBEDTLS_DIR" ]]; then
     downloadMbedTLS
@@ -315,6 +324,7 @@ if [[ ! -d "$OUTPUT_DIR" && ! -d "$BUILD_DIR" ]]; then
   fi
 
   # Building library
+  buildLibuavs3d
   buildMbedTLS
   buildLibVpx
   buildFfmpeg

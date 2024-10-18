@@ -25,7 +25,7 @@ android {
             abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
         }
 
-        ndkVersion = "27.1.12297006"
+        ndkVersion = "21.4.7075529"
     }
 
     compileOptions {
@@ -41,7 +41,7 @@ android {
     externalNativeBuild {
         cmake {
             path("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
+            version = "3.18.1"
         }
     }
 }
