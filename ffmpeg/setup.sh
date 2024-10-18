@@ -287,6 +287,8 @@ function buildFfmpeg() {
       ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
       ${COMMON_OPTIONS}
 
+    cat ffbuild/config.log
+
     # Build FFmpeg
     echo "Building FFmpeg for $ARCH..."
     make clean
