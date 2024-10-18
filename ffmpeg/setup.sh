@@ -302,6 +302,8 @@ function buildFfmpeg() {
     mkdir -p "${OUTPUT_LIB}"
     cp "${BUILD_DIR}"/"${ABI}"/lib/*.so "${OUTPUT_LIB}"
 
+    cp "${BUILD_DIR}"/external/"${ABI}"/lib/libuavs3d.so "${OUTPUT_LIB}"
+
     OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ABI}
     mkdir -p "${OUTPUT_HEADERS}"
     cp -r "${BUILD_DIR}"/"${ABI}"/include/* "${OUTPUT_HEADERS}"
