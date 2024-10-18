@@ -172,6 +172,7 @@ function buildLibVpx() {
     make clean
     make -j$JOBS
     make install
+    cat $BUILD_DIR/external/$ABI/lib/pkgconfig/vpx.pc
   done
   popd
 }
