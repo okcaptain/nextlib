@@ -87,7 +87,7 @@ function buildLibuavs3d() {
     rm -rf ${CMAKE_BUILD_DIR}
     mkdir -p ${CMAKE_BUILD_DIR}
     cd ${CMAKE_BUILD_DIR}
-    mkdir -p $BUILD_DIR/external/$ABI
+    mkdir -p $BUILD_DIR/$ABI
 
     ${CMAKE_EXECUTABLE} .. \
      -DCMAKE_VERBOSE_MAKEFILE=ON \
@@ -100,7 +100,7 @@ function buildLibuavs3d() {
      -DANDROID_NDK=$ANDROID_NDK_HOME \
      -DCMAKE_ANDROID_NDK=$ANDROID_NDK_HOME \
      -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
-     -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/external/$ABI \
+     -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/$ABI \
      -DCOMPILE_10BIT=1 \
      -DBUILD_SHARED_LIBS=1
 
