@@ -306,7 +306,10 @@ function buildFfmpeg() {
 
     OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ABI}
     mkdir -p "${OUTPUT_HEADERS}"
+
+    ls -al "${OUTPUT_HEADERS}"
     cp -r "${BUILD_DIR}"/"${ABI}"/include/* "${OUTPUT_HEADERS}"
+    ls -al "${OUTPUT_HEADERS}"
 
   done
   popd
