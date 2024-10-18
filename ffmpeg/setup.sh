@@ -248,6 +248,8 @@ function buildFfmpeg() {
     DEP_CFLAGS="-I$BUILD_DIR/external/$ABI/include"
     DEP_LD_FLAGS="-L$BUILD_DIR/external/$ABI/lib"
 
+    export PKG_CONFIG_PATH="$BUILD_DIR/external/$ABI/lib/pkgconfig"
+
     # Configure FFmpeg build
     ./configure \
       --prefix=$BUILD_DIR/$ABI \
