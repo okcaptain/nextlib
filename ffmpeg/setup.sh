@@ -108,7 +108,7 @@ function buildLibuavs3d() {
     make
     make install
 
-    cat $BUILD_DIR/external/$ABI/lib/pkgconfig/uavs3d.pc
+#    cat $BUILD_DIR/external/$ABI/lib/pkgconfig/uavs3d.pc
   done
 
   popd
@@ -173,7 +173,7 @@ function buildLibVpx() {
     make clean
     make -j$JOBS
     make install
-    cat $BUILD_DIR/external/$ABI/lib/pkgconfig/vpx.pc
+#    cat $BUILD_DIR/external/$ABI/lib/pkgconfig/vpx.pc
   done
   popd
 }
@@ -290,7 +290,7 @@ function buildFfmpeg() {
       ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
       ${COMMON_OPTIONS}
 
-    cat ffbuild/config.log
+#    cat ffbuild/config.log
 
     # Build FFmpeg
     echo "Building FFmpeg for $ARCH..."
