@@ -26,6 +26,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install autoconf pkg-config libtool ninja-build python3-pip gawk
+          sudo pip3 install meson
+
       - name: Build Project with gradle
         run: |
           ./gradlew assembleRelease
