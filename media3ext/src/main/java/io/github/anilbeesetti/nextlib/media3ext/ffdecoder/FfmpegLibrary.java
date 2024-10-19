@@ -124,7 +124,6 @@ public final class FfmpegLibrary {
       case MimeTypes.VIDEO_MPEG2 -> "mpeg2video";
       case MimeTypes.VIDEO_VP8 -> "libvpx";
       case MimeTypes.VIDEO_VP9 -> "libvpx-vp9";
-      case MimeTypes.BASE_TYPE_VIDEO + "/avs3" -> "libuavs3d";
       default -> null;
     };
   }
