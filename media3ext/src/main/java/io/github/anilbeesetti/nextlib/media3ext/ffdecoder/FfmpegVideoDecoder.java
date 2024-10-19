@@ -59,8 +59,8 @@ final class FfmpegVideoDecoder extends
             throw new FfmpegDecoderException("Failed to load decoder native library.");
         }
         assert format.sampleMimeType != null;
-        codecName = (MimeTypes.VIDEO_H264.equals(format.sampleMimeType) && format.colorInfo.colorRange == -1 && format.colorInfo.colorSpace == -1 && format.colorInfo.colorTransfer == -1) ? "avs3" : Assertions.checkNotNull(FfmpegLibrary.getCodecName(format.sampleMimeType));
-        extraData = "avs3".equals(codecName) ? null : getExtraData(format.sampleMimeType, format.initializationData);
+        codecName = (MimeTypes.VIDEO_H264.equals(format.sampleMimeType) && format.colorInfo.colorRange == -1 && format.colorInfo.colorSpace == -1 && format.colorInfo.colorTransfer == -1) ? "libuavs3d" : Assertions.checkNotNull(FfmpegLibrary.getCodecName(format.sampleMimeType));
+        extraData = "libuavs3d".equals(codecName) ? null : getExtraData(format.sampleMimeType, format.initializationData);
         this.format = format;
         nativeContext = ffmpegInitialize(codecName, extraData, threads);
         if (nativeContext == 0) {
